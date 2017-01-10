@@ -1,0 +1,3 @@
+#!/usr/bin/with-contenv /bin/sh
+
+runuser -l %AZKABAN_USER% -c 'cd /opt/azkaban-web-server && bin/azkaban-web-start.sh'
