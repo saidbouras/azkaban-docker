@@ -4,17 +4,6 @@
 if [ ! -z "$(ls -A /opt/azkaban-web-server-${AZKABAN_VERSION}/conf)" ]; then
     echo " --> Do nothing, we want to persist files !"
 else
-    if [ "$USE_SSL" == "TRUE" ] || [ "$USE_SSL" == "true" ]; then
-        echo " ---> Active ssl on azkaban"
-        sed -i 's/jetty.use.ssl=false/jetty.use.ssl=true/g' /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/azkaban.properties
-        sed -i 's/#jetty.ssl.port/jetty.ssl.port/g' /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/azkaban.properties
-        sed -i 's/#jetty.keystore/jetty.keystore/g' /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/azkaban.properties
-        sed -i 's/#jetty.password/jetty.password//g' /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/azkaban.properties
-        sed -i 's/#jetty.keypassword/jetty.keypassword/g' /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/azkaban.properties
-        sed -i 's/#jetty.truststore/jetty.truststore/g' /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/azkaban.properties
-        sed -i 's/#jetty.trustpassword/jetty.trustpassword/g' /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/azkaban.properties
-    fi
-
     echo " --> Setup azkaban conf directory"
     cp /root/azkaban-keystore /opt/azkaban-web-server-${AZKABAN_VERSION}/
     cp /root/azkaban.properties /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/
@@ -42,6 +31,19 @@ else
     useradd -ms /bin/bash ${AZKABAN_USER}
     chown -R ${AZKABAN_USER}:${AZKABAN_USER} /opt/azkaban-web-server-${AZKABAN_VERSION}
     chmod 755 /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/*
+
+    if [ "$USE_SSL" == TRUE ] || [ "$USE_SSL" == true ]; then
+        echo " ---> Active ssl on azkaban"
+        sed -i 's/jetty.port/#jetty.port/g' /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/azkaban.properties
+        sed -i 's/#jetty.excludeCipherSuites/jetty.excludeCipherSuites/g' /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/azkaban.properties
+        sed -i 's/jetty.use.ssl=false/#jetty.use.ssl=true/g' /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/azkaban.properties
+        sed -i 's/#jetty.ssl.port/jetty.ssl.port/g' /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/azkaban.properties
+        sed -i 's/#jetty.keystore/jetty.keystore/g' /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/azkaban.properties
+        sed -i 's/#jetty.password/jetty.password/g' /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/azkaban.properties
+        sed -i 's/#jetty.keypassword/jetty.keypassword/g' /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/azkaban.properties
+        sed -i 's/#jetty.truststore/jetty.truststore/g' /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/azkaban.properties
+        sed -i 's/#jetty.trustpassword/jetty.trustpassword/g' /opt/azkaban-web-server-${AZKABAN_VERSION}/conf/azkaban.properties
+    fi
 fi
 
 exit 0

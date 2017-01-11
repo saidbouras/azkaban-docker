@@ -26,12 +26,11 @@ docker run --name azkwebserver -dt \
 
 ## Note
 All [Azkaban] server docker images is tagged by azkaban version.
-Example : rinscy/azkaban-execserver:3.1.0 use azkaban in version 3.1.0
+Example : ```rinscy/azkaban-webserver:3.1.0 ```, use azkaban in version 3.1.0.
 
 Note that it's the azkaban-web-server which create the azkaban database with the
 azkaban admin user and the according tables.
-I recommend the use of docker-compose (see in [github] repo)
-if you want a complete azkaban setup with one executor.
+I recommend the use of docker-compose (see in [github] repo) if you want a complete azkaban setup with one executor.
 
 [s6-overlay]: <https://github.com/just-containers/s6-overlay/wiki>
 [Azkaban]: <https://azkaban.github.io>
