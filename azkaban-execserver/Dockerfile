@@ -24,11 +24,6 @@ RUN git clone https://github.com/azkaban/azkaban.git && cd azkaban \
     && git checkout tags/$AZKABAN_VERSION \
     && ./gradlew distZip
 
-#RUN cp -R /azkaban/azkaban-execserver/build/package /opt/azkaban-exec-server-${AZKABAN_VERSION} \
-#    && ln -s /opt/azkaban-exec-server-${AZKABAN_VERSION} /opt/azkaban-exec-server \
-#    && rm -rf /opt/azkaban-exec-server-${AZKABAN_VERSION}/conf/* \
-#    && curl -sLk http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-$MYSQL_JDBC_VERSION.tar.gz | tar xz
-
 RUN unzip /azkaban/build/distributions/azkaban-exec-server-${AZKABAN_VERSION}.zip -d /opt \
     && ln -s /opt/azkaban-exec-server-${AZKABAN_VERSION} /opt/azkaban-exec-server \
     && mkdir -p /opt/azkaban-exec-server-${AZKABAN_VERSION}/conf /opt/azkaban-exec-server-${AZKABAN_VERSION}/extlib \
